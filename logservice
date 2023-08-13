@@ -1,0 +1,25 @@
+@RestController
+@RequestMapping("/log")
+public class LogService {
+
+    @Autowired
+    private LogRepository logRepository;
+
+    @PostMapping("/jwt")
+    public ResponseEntity<String> logJwtToken(@RequestBody String jwtToken) {
+        try {
+            Jws<Claims> claimsJws = Jwts.parser().setSigningKey("your-secret-key").parseClaimsJws(jwtToken);
+            Claims claims = claimsJws.getBody();
+            
+            String userId = claims.get("userId", String.class);
+            String username = claims.get("username", String.class);
+            
+            // Log tablosuna veriyi kaydetme işlemleri burada gerçekleştirilebilir
+            logRepository.save(new LogEntry(userId, username, ...));
+
+            return ResponseEntity.ok("Token logged successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error logging token.");
+        }
+    }
+}
