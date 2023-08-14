@@ -1,0 +1,12 @@
+ for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+            for (Permission permission : role.getPermissions()) {
+                authorities.add(new SimpleGrantedAuthority(permission.getName()));
+            }
+//            for (Facility facility : role.getFacilities()) {
+//                if (facility.getId() == 5) { // Tesisin ID'si 5 ise "aselsan" tesisini temsil ediyor
+//                    authorities.add(new SimpleGrantedAuthority("FACILITY_" + facility.getName()));
+//                }
+//            }
+
+        }
