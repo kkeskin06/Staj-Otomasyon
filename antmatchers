@@ -1,0 +1,2 @@
+.antMatchers("api/user").hasRole("AdminA")
+                .antMatchers("api/user").hasRole("AdminC")
