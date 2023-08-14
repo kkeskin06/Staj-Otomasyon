@@ -1,0 +1,11 @@
+  @PreAuthorize("hasAuthority('canDeleteUser')")
+    @RequestMapping("/user1")
+    public String hello() {
+        return "delete";
+    }
+
+    @PreAuthorize("hasAuthority('canReadUser')")
+    @RequestMapping("/user3")
+    public String hello2() {
+        return "read";
+    }
