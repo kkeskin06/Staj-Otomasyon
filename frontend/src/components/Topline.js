@@ -6,13 +6,13 @@ function Topline(args) {
  
 
   return (
-  <nav class="navbar navbar-expand-lg bg-secondary" style={{marginBottom:25}}>
+  <nav class="navbar navbar-expand-lg " style={{marginBottom:25,backgroundColor:"#C9DFF1"}}>
     <div class="container">
       <div className="col ">
       <img src="/ktunlogo.png" style={{height:70,weight:70}}></img>
       </div>
       <div className="col">
-      <a class="navbar-brand" href="/" style={{color:"white",fontWeight:"bold"}}>Konya Teknik Üniversitesi Staj Otomasyonu</a>
+      <a class="navbar-brand" href="/" style={{color:"#005D8E",fontWeight:"bold"}}>Konya Teknik Üniversitesi Staj Otomasyonu</a>
       </div>
       <div className="col">
         

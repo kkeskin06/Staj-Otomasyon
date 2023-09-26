@@ -4,6 +4,7 @@ import com.example.demo.entity.Ogrenci;
 import com.example.demo.service.OgrenciService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,15 +28,11 @@ public class OgrenciController {
         Ogrenci ogrenci = ogrenciService.getOgrenci(id);
         return ResponseEntity.ok(ogrenci);
     }
-
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/get")
     public ResponseEntity<List<Ogrenci>> getAll(){
         List<Ogrenci> ogrenci = ogrenciService.getAll();
         return ResponseEntity.ok(ogrenci);
     }
 
-   /* @GetMapping("/get/{id}")
-    public ResponseEntity<Ogrenci> getbysirket(@PathVariable("id") Long id) {
-
-    }*/
 }

@@ -5,19 +5,19 @@ import { useNavigate } from "react-router";
 function Login() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const handleClick = (e) => {
     e.preventDefault()
 
     const giris = {
-      "email": email,
+      "username": username,
       "password": password
     }
 
 
-    fetch("http://localhost:8080/login", {
+    fetch("http://localhost:8080/auth", {
       mode: 'cors',
       method: 'POST',
       headers: {
@@ -27,7 +27,7 @@ function Login() {
       body: JSON.stringify(giris)
     }).then((Response) => {
       console.log(Response.status)
-      console.log(email)
+      console.log(username)
       console.log(password)
       if (Response.status == 200) {
         alert("Giris Başarılı")
@@ -48,10 +48,10 @@ function Login() {
 
 
   return (
-
-    <div class="container">
+    <div >
+    <div class="container" >
       <br></br>
-      <div class="page-header" style={{textAlign:"center"}}>
+      <div class="page-header" style={{textAlign:"center", color:"#005D8E"}}>
         <h1>Konya Teknik Üniversitesi Staj Otomasyonu</h1>
       </div>
       <br></br>
@@ -69,15 +69,15 @@ function Login() {
         </div>
 
 
-        <div class="col" style={{ marginTop: 50 }}>
+        <div class="col" style={{ marginTop: 100 }}>
 
           <br></br>
           <div className="row">
             <form>
 
               <div class="form-outline mb-4">
-                <input type="email" id="email" class="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <label class="form-label" for="email">Mail Adresi</label>
+                <input type="username" id="username" class="form-control" value={username} onChange={(e) => setUsername(e.target.value)} />
+                <label class="form-label" for="username">Kullanıcı Adı</label>
               </div>
 
 
@@ -106,7 +106,7 @@ function Login() {
         </div>
       </div>
     </div>
-
+            </div>
   )
 }
 

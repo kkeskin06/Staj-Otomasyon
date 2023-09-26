@@ -26,7 +26,6 @@ public class OgrenciServiceImpl implements OgrenciService {
        Optional<Ogrenci> ogrenci = ogrenciRepository.findById(id);
        if(ogrenci.isPresent()){
            return ogrenci.get();
-
        }
        return null;
     }

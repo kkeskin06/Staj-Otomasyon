@@ -6,6 +6,7 @@ import com.example.demo.entity.TeslimBelgeleri;
 import com.example.demo.service.TeslimBelgeleriService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,14 +30,14 @@ public class TeslimBelgelericontroller {
         return teslimBelgeleriService.getTeslimBelgeleriById(id);
     }
 
-    @CrossOrigin
+    @PreAuthorize("hasRole('ROLE_Ogrenci')")
     @PostMapping("/add/{id}")
     public String save(@RequestBody TeslimBelgeleri teslimBelgeleri, @PathVariable("id") Long id){
         teslimBelgeleriService.saveTeslimBelgeleri(teslimBelgeleri,id);
         return "belgeler teslim edildi.";
     }
 
-    @CrossOrigin
+
     @PostMapping("/add/sicilfisi/{id}")
     public String sicilfisi(@RequestBody SicilFisi sicilFisi, @PathVariable("id") Long id){
         teslimBelgeleriService.saveSicilFisi(sicilFisi,id);

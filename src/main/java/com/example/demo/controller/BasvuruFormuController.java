@@ -14,6 +14,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,22 +34,20 @@ public class BasvuruFormuController {
     @Autowired
     private FileServiceImpl fileService;
 
-
-
-
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/get")
     public ResponseEntity<List<BasvuruFormu>> getBasvuru(){
         List<BasvuruFormu> basvuruFormu = basvuruFormuService.getBasvuru();
         return ResponseEntity.ok(basvuruFormu);
     }
 
-    @CrossOrigin
+    @PreAuthorize("hasRole('ROLE_Ogrenci')")
     @PostMapping("/add")
     public String save(@RequestBody BasvuruFormu basvuruFormu){
         basvuruFormuService.saveBasvuruFormu(basvuruFormu);
         return "basvuru eklendi";
     }
-
+    @PreAuthorize("hasRole('ROLE_Akademisyen') OR hasRole('ROLE_Ogrenci')")
     @GetMapping("/get/{id}")
     public ResponseEntity<List<BasvuruFormu>> getbyogrenci(@PathVariable("id") Long id){
         List<BasvuruFormu> basvuruFormu = basvuruFormuService.getBasvuruOgrenciId(id);
@@ -56,7 +55,7 @@ public class BasvuruFormuController {
     }
 
 
-    @CrossOrigin
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/edit/{id}")
     public String updateBasvuruFormu(@PathVariable("id") Long id){
        // BasvuruFormu resultBasvuruFormu = basvuruFormuService.updateBasvuru(id);

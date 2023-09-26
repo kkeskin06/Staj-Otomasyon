@@ -6,7 +6,8 @@ function SirketListesi(){
         fetch("http://localhost:8080/sirket/get")
         .then(reponse => reponse.json())
         .then(response => setSirketler(response))
-    })
+    },[])
+
     let tb_data = sirketler.map((item)=>{return(
         <tr key={item.id} style={{textAlign:"center"}}>
         <td>{item.sirketAdi}</td>
