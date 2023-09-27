@@ -58,70 +58,63 @@ public class BasvuruFormuController {
     @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/edit/{id}")
     public String updateBasvuruFormu(@PathVariable("id") Long id){
-       // BasvuruFormu resultBasvuruFormu = basvuruFormuService.updateBasvuru(id);
         basvuruFormuService.updateBasvuru(id);
-        return" ResponseEntity.ok(resultBasvuruFormu)";
+        return "Basvuru formu guncellendi";
     }
 
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/edit2/{id}")
     public String updateBasvuruFormu2(@PathVariable("id") Long id){
         // BasvuruFormu resultBasvuruFormu = basvuruFormuService.updateBasvuru2(id);
         basvuruFormuService.updateBasvuru2(id);
         return" ResponseEntity.ok(resultBasvuruFormu)";
     }
-
+    @PreAuthorize("hasRole('ROLE_Sirket')")
     @GetMapping("/getbysirket/{id}")
     public ResponseEntity<List<BasvuruFormu>> getbysirket(@PathVariable("id") Long id){
         List<BasvuruFormu> sirket = basvuruFormuService.getBasvuruSirketId(id);
         return ResponseEntity.ok(sirket);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_Akademisyen') OR hasRole('ROLE_Ogrenci') OR hasRole('ROLE_Sirket') ")
     @GetMapping("/detay/{id}")
     public List<BasvuruFormu> detay(@PathVariable("id") Long id){
-
         return basvuruFormuService.getBasvuruById(id);
     }
-
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/search/{keyword}")
     public List<BasvuruFormu> search(@PathVariable("keyword") String keyword){
-
         return basvuruFormuService.search(keyword);
     }
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/pageable/{pageNo}")
-    public ResponseEntity<List<BasvuruFormu>> getAll(@PathVariable("pageNo") Integer pageNo
-                                                     ){
+    public ResponseEntity<List<BasvuruFormu>> getAll(@PathVariable("pageNo") Integer pageNo){
         List<BasvuruFormu> list = basvuruFormuService.getAllBasvuruFormu(pageNo,2);
         return ResponseEntity.ok(list);
     }
-
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/sirala")
     public List<BasvuruFormu> sirala(){
-
         return basvuruFormuService.sirala();
     }
-
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/sirala2")
     public List<BasvuruFormu> sirala2(){
-
         return basvuruFormuService.sirala2();
     }
-
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/siralaAd")
     public List<BasvuruFormu> siralaAd(){
-
         return basvuruFormuService.siralaAd();
     }
-
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/siralaStaj")
     public List<BasvuruFormu> siralaStaj(){
-
         return basvuruFormuService.siralaStaj();
     }
-
+    @PreAuthorize("hasRole('ROLE_Akademisyen')")
     @GetMapping("/siralaDurum")
     public List<BasvuruFormu> siralaDurum(){
-
         return basvuruFormuService.siralaDurum();
     }
 }
