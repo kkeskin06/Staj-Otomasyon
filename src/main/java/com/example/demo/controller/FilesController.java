@@ -28,7 +28,7 @@ public class FilesController {
     public FilesController(FileService fileService){
         this.fileService = fileService;
     }
-    @CrossOrigin
+
     @PostMapping("/post")
     public ResponseEntity<FileEntity> upload(@RequestParam("file") MultipartFile file) {
 
