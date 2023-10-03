@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router";
+import { useToken } from './TokenContext';
 import { Icon } from 'semantic-ui-react'
 function BasvuruListe() {
 
     // const navigate = useNavigate();
     const [basvurular, setBasvurular] = useState([]);
     const [pageNo, setPageNo] = useState();
+    const { token, getHeadersWithToken } = useToken();
     useEffect(() => {
-        fetch("http://localhost:8080/basvuru/get")
+        fetch("http://localhost:8080/basvuru/get",getHeadersWithToken()
+        //, 
+        // {
+        //     headers: {
+        //       Authorization: `Bearer ${token}`, // Token'i gönderin
+        //     },
+        //   }
+          )
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-    }, [])
+    }, [getHeadersWithToken])
 
 
     let tb_data = basvurular.map((item) => {

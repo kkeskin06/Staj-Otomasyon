@@ -7,7 +7,7 @@ function SirketBilgileri() {
         fetch('http://localhost:8080/sirket/get/'+2)
             .then(reponse => reponse.json())
             .then(response => setSirket(response))
-    })
+    }, [])
 
     // let data = sirket.map((item) => {
     //     return (
