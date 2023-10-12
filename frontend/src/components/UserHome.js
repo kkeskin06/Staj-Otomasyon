@@ -1,5 +1,5 @@
 import {React , useEffect, useState} from "react";
-
+import { Link } from "react-router-dom";
 function UserHome(){
     /*const [ogrenciler,setOgrenciler] = useState([])
     useEffect(()=>{
@@ -54,7 +54,7 @@ function UserHome(){
                     <div class="card-body">
                         <h5 class="card-title">Staj Başvurusu</h5>
                         <p class="card-text">Yeni Staj Başvurusu Yapmak için gerekli belgeleri yüklemeli ve başvuru formunu doldurmalısın.</p>
-                        <a href="/Basvuru" class="btn btn-primary">Başvuru Formuna Git</a>
+                        <Link to={"/Basvuru"} class="btn btn-primary">Başvuru Formuna Git</Link>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@ function UserHome(){
                     <div class="card-body">
                         <h5 class="card-title">Eski Başvurular</h5>
                         <p class="card-text">Geçmiş Staj Başvurularını Görüntüleyebilir ve Durumlarını görebilirsin.</p>
-                        <a href="/ogrencieskibasvuru" class="btn btn-primary">Başvurularıma Git</a>
+                        <Link to={"/ogrencieskibasvuru"} class="btn btn-primary">Başvurularıma Git</Link>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@ function UserHome(){
                     <div class="card-body">
                         <h5 class="card-title">Staj Belge Teslimi</h5>
                         <p class="card-text">Stajını Tamamladığında okula teslim etmen gereken belgeleri yüklemelesin.</p>
-                        <a href="/teslimbelgeleri" class="btn btn-primary">Belge Teslimine Git</a>
+                        <Link to={"/teslimbelgeleri"} class="btn btn-primary">Belge Teslimine Git</Link>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-
+import { useToken } from './TokenContext';
 function SirketListesi(){
+    const {token, getHeadersWithToken } = useToken();
     const [sirketler,setSirketler] = useState([])
     useEffect(()=>{
-        fetch("http://localhost:8080/sirket/get")
+        fetch("http://localhost:8080/sirket/get",getHeadersWithToken())
         .then(reponse => reponse.json())
         .then(response => setSirketler(response))
-    },[])
+    },[token])
 
     let tb_data = sirketler.map((item)=>{return(
         <tr key={item.id} style={{textAlign:"center"}}>

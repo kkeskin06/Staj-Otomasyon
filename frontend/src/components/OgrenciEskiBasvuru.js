@@ -1,16 +1,16 @@
 
 import React, { useEffect, useState } from "react";
-
+import { useToken } from './TokenContext';
 
 
 function OgrenciEskiBasvuru() {
-
+    const {token,getHeadersWithToken} = useToken();
     const [basvurular, setBasvurular] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:8080/basvuru/get/" + 527) 
+        fetch("http://localhost:8080/basvuru/get/" + 527,getHeadersWithToken()) 
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-    }, [])
+    }, [token])
 
     let tb_data = basvurular.map((item) => {
         return (

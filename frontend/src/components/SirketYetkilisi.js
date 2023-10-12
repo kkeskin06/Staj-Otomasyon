@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 function SirketYetkilisi(){
     return(
         <div class="container">
@@ -39,7 +39,7 @@ function SirketYetkilisi(){
                 <div class="card-body">
                     <h5 class="card-title">Staj yapan öğrenciler</h5>
                     <p class="card-text">Şirketinizde staj yapan öğrencileri görüntüle</p>
-                    <a href="/ogrencilistesibysirket" class="btn btn-primary">Öğrenci Listesine Git</a>
+                    <Link to={"/ogrencilistesibysirket"} class="btn btn-primary">Öğrenci Listesine Git</Link>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@ function SirketYetkilisi(){
                 <div class="card-body">
                     <h5 class="card-title">Şirket Bilgileri</h5>
                     <p class="card-text">Şirketinize ait bilgileri görüntülebilirsiniz.</p>
-                    <a href="/sirketbilgileri" class="btn btn-primary">Şirket Bilgilerine git</a>
+                    <Link to={"/sirketbilgileri"} class="btn btn-primary">Şirket Bilgilerine git</Link>
                 </div>
             </div>
         </div>

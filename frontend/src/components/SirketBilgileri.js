@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-
+import {useToken} from "./TokenContext"
 
 function SirketBilgileri() {
+    const {token, getHeadersWithToken} = useToken();
     const [sirket, setSirket] = useState("");
     useEffect(() => {
-        fetch('http://localhost:8080/sirket/get/'+2)
+        fetch('http://localhost:8080/sirket/get/'+2,getHeadersWithToken())
             .then(reponse => reponse.json())
             .then(response => setSirket(response))
-    }, [])
+    }, [token])
 
     // let data = sirket.map((item) => {
     //     return (

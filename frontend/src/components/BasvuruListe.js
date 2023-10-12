@@ -2,24 +2,19 @@ import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router";
 import { useToken } from './TokenContext';
 import { Icon } from 'semantic-ui-react'
+import { Link } from "react-router-dom";
 function BasvuruListe() {
 
     // const navigate = useNavigate();
     const [basvurular, setBasvurular] = useState([]);
     const [pageNo, setPageNo] = useState();
-    const { token, getHeadersWithToken } = useToken();
+    const {token, getHeadersWithToken } = useToken();
+
     useEffect(() => {
-        fetch("http://localhost:8080/basvuru/get",getHeadersWithToken()
-        //, 
-        // {
-        //     headers: {
-        //       Authorization: `Bearer ${token}`, // Token'i gönderin
-        //     },
-        //   }
-          )
+        fetch("http://localhost:8080/basvuru/get",getHeadersWithToken())
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-    }, [getHeadersWithToken])
+    },[token])
 
 
     let tb_data = basvurular.map((item) => {
@@ -43,7 +38,8 @@ function BasvuruListe() {
                 {item.stajDurumu === 'OnayBekliyor' && <td style={{ color: 'purple' }}>
                     Onay Bekliyor
                 </td>}
-                <td><a href={`/ogrenciform/${item.id}`} class="btn btn-info">Detay</a></td>
+                <td>
+                <Link to={`/ogrenciform/${item.id}`} class="btn btn-info">Detay</Link></td>
 
             </tr>
         )
@@ -147,7 +143,7 @@ function BasvuruListe() {
                 <input type="text" class="form-control" placeholder="İsime veya öğrenci numarasına Göre Ara" onChange={(e) => setKeyword(e.target.value)} aria-label="Recipient's username" aria-describedby="basic-addon2" />
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" onClick={aramayap}>Ara</button>
-
+                   
                 </div>
                 <button class="btn btn-outline-secondary" type="button" onClick={refresh}>Listeye Geri Dön</button>
             </div>
@@ -156,6 +152,7 @@ function BasvuruListe() {
                     <tr style={{ textAlign: "center", color: "Black", fontWeight: "bold" }}>
                         <td>
                             Öğrenci No
+                           
                             <Icon name='angle double up' size='large' onClick={sirala} />
                             <Icon name='angle double down' size='large' onClick={sirala2} />
 

@@ -1,14 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import {useToken} from "./TokenContext"
 function OgrenciListesiBySirket() {
-
+    const {token,  getHeadersWithToken} = useToken();
     const [basvuru, setBasvurular] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8080/basvuru/getbysirket/' + 490) //sirket id
+        fetch('http://localhost:8080/basvuru/getbysirket/' + 490 , getHeadersWithToken()) //sirket id
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-    })
+    },[token])
 
     let tb_data = basvuru.map((item) => {
         return (

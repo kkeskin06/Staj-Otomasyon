@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { } from "react-router-dom";
 import { useNavigate } from "react-router";
+import { useToken } from './TokenContext';
 function Login() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [token, setToken] = useState(null)
+  const {token, setAuthToken} = useToken();
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -17,7 +18,6 @@ function Login() {
       "password": password
     }
 
-
     fetch("http://localhost:8080/auth", {
       mode: 'cors',
       method: 'POST',
@@ -25,13 +25,12 @@ function Login() {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: JSON.stringify(giris)
+      body:JSON.stringify(giris)
     }).then((response) => {
       if (response.status === 200) {
         response.json().then((data) => {
-          const jwtToken = data.jwtToken;
-          setToken(jwtToken);
-          alert("Giris Başarılı")
+          setAuthToken(data.jwtToken);
+          // alert("Giris Başarılı")
           let path = `/`;
           navigate(path);
         });
@@ -41,26 +40,6 @@ function Login() {
     }).catch((err) => {
       console.error(err);
     });
-
-
-
-    // .then((Response) => {
-    //   console.log(Response.status)
-    //   console.log(username)
-    //   console.log(password)
-
-    //   if (Response.status == 200) {
-    //     alert("Giris Başarılı")
-    //     let path = `/`;
-    //     navigate(path);
-    //   } else {
-    //     alert("mail hesabı veya parola hatalı")
-    //   }
-    // }).catch((err) => {
-
-    //   console.log(err);
-    // });
-
 
   }
 

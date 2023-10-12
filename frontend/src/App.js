@@ -2,13 +2,14 @@ import React from "react";
 import {Topline,UserHome,BasvuruForm, Home,BasvuruListe ,Ogrenciform,
   Login,Akademisyen,BasvuruBelgesi,OgrenciListesi,SirketListesi,SirketYetkilisi,
   OgrenciListesiBySirket,TeslimBelgeleri,TeslimBelgesiListe,Sicilfisi,TeslimBelgeleriAkademisyen,TeslimBelgeDetay,SirketBilgileri
-,OgrenciEskiBasvuru,Uyeol} from "./components";
+,OgrenciEskiBasvuru,Uyeol,Forbidden} from "./components";
+import {TokenProvider} from "./components/TokenContext"
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 
 function App() {
 
   return (
-    
+    <TokenProvider>
     <BrowserRouter>
       <Routes>
           <Route path="/" element={<><Topline/><Home/></>}></Route>
@@ -31,10 +32,9 @@ function App() {
           <Route path="sirketbilgileri" element={<><Topline/><SirketBilgileri/></>} />
           <Route path="ogrencieskibasvuru" element={<><Topline/><OgrenciEskiBasvuru/></>} />
           <Route path="uyeol" element={<Uyeol/>} />
-
-
       </Routes>
     </BrowserRouter>
+    </TokenProvider>
   );
 }
 

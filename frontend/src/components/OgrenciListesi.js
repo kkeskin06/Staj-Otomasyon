@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-
+import { useToken } from './TokenContext';
 function OgrenciListesi(){
+    const {token, getHeadersWithToken } = useToken();
     const [ogrenciler,setOgrenciler] = useState([])
     useEffect(()=>{
-        fetch("http://localhost:8080/ogrenci/get")
+        fetch("http://localhost:8080/ogrenci/get",getHeadersWithToken())
         .then(reponse => reponse.json())
         .then(response => setOgrenciler(response))
-    })
+    },[token])
     let tb_data = ogrenciler.map((item)=>{return(
         <tr key={item.id} style={{textAlign:"center"}}>
         <td>{item.ad}</td>

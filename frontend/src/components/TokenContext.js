@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const TokenContext = createContext();
 
@@ -10,11 +10,22 @@ export function TokenProvider({ children }) {
   const [token, setToken] = useState(null);
 
   const setAuthToken = (newToken) => {
+    localStorage.setItem("AuthInfo", newToken)
     setToken(newToken);
   };
 
+  const setLogOutToken = () => {
+    setToken(null);
+  };
+
+  useEffect(() => {
+    const localToken = localStorage.getItem("AuthInfo")
+    setToken(localToken)
+  },[])
+
   // Token'i göndermek için bir işlev ekleyin
   const getHeadersWithToken = () => {
+    console.log(token)
     return {
       headers: {
         'Content-Type': 'application/json',
@@ -30,3 +41,4 @@ export function TokenProvider({ children }) {
     </TokenContext.Provider>
   );
 }
+

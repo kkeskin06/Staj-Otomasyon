@@ -1,18 +1,19 @@
 
 import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router";
-
+import { useToken } from './TokenContext';
 import { Icon } from 'semantic-ui-react'
 
 function TeslimBelgeleriAkademisyen() {
 
     // const navigate = useNavigate();
+    const {token, getHeadersWithToken } = useToken();
     const [basvurular, setBasvurular] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:8080/teslim/getTeslimbelgeleri")
+        fetch("http://localhost:8080/teslim/getTeslimbelgeleri",getHeadersWithToken())
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-    }, [])
+    }, [token])
 
 
     let tb_data = basvurular.map((item) => {

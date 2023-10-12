@@ -19,9 +19,10 @@ import TeslimBelgeDetay from "./TeslimBelgeDetay";
 import SirketBilgileri from "./SirketBilgileri";
 import OgrenciEskiBasvuru from "./OgrenciEskiBasvuru";
 import Uyeol from "./Uyeol";
+
 export {
      Topline, UserHome, BasvuruForm, Home, BasvuruListe,
      Ogrenciform, Login, Akademisyen, BasvuruBelgesi, OgrenciListesi, SirketListesi, SirketYetkilisi,
      OgrenciListesiBySirket, TeslimBelgeleri, TeslimBelgesiListe, Sicilfisi,TeslimBelgeleriAkademisyen,TeslimBelgeDetay,SirketBilgileri,
-     OgrenciEskiBasvuru,Uyeol
+     OgrenciEskiBasvuru,Uyeol,
 };

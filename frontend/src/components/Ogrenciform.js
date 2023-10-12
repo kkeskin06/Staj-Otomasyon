@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 import { format } from 'date-fns'
 import { useNavigate } from "react-router";
-
+import { useToken } from "./TokenContext";
 
 function Ogrenciform() {
     const navigate = useNavigate();
@@ -11,11 +11,13 @@ function Ogrenciform() {
     const [basvurular, setBasvurular] = useState([]);
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
+    const {token,getHeadersWithToken} = useToken();
+
     useEffect(() => {
-        fetch("http://localhost:8080/basvuru/detay/" + id)
+        fetch("http://localhost:8080/basvuru/detay/" + id ,getHeadersWithToken() )
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-    })
+    },[token])
 
     let tb_data = basvurular.map((item) => {
         return (

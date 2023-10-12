@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,7 +20,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/files")
-@CrossOrigin
 public class FilesController {
 
     private final FileService fileService;
@@ -29,15 +29,13 @@ public class FilesController {
         this.fileService = fileService;
     }
 
+    @PreAuthorize("hasRole('ROLE_Ogrenci')")
     @PostMapping("/post")
     public ResponseEntity<FileEntity> upload(@RequestParam("file") MultipartFile file) {
-
             var c = fileService.savefile(file);
-
             return ResponseEntity.ok(c);
-
     }
-
+    @PreAuthorize("hasRole('ROLE_Ogrenci') OR hasRole('ROLE_Akademisyen')")
     @GetMapping("/get")
     public List<FileResponse> list() {
         return fileService.getAllFiles()
@@ -60,6 +58,7 @@ public class FilesController {
 
         return fileResponse;
     }
+    @PreAuthorize("hasRole('ROLE_Ogrenci') OR hasRole('ROLE_Akademisyen')")
     @GetMapping("{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String id) {
         Optional<FileEntity> fileEntityOptional = fileService.getFile(id);
