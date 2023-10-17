@@ -25,9 +25,9 @@ public class SirketController {
         return ResponseEntity.ok(sirket);
     }
     @PreAuthorize("hasRole('ROLE_Sirket')")
-    @GetMapping("/get/{id}")
-    public Sirket getSirketBySirketYetkilisi(@PathVariable("id") Long id){
-        return sirketService.getSirketBySirketYetkilisi(id);
+    @GetMapping("/get/detay")
+    public Sirket getSirketBySirketYetkilisi(){
+        return sirketService.getSirketBySirketYetkilisi();
     }
 
 

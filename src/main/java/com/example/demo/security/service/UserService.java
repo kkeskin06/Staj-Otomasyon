@@ -70,4 +70,7 @@ public class UserService {
        return authenticationFacade.getName();
     }
 
+    public User getUserByName(){
+        return userRepository.findByUsername(authenticationFacade.getName());
+    }
 }

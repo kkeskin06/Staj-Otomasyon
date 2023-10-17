@@ -14,7 +14,10 @@ public interface SirketRepository extends JpaRepository<Sirket,Long> {
     public Sirket findByEmail(String email);
 
     public Sirket findByVergino(String vergino);
+
     @Query("SELECT r FROM Sirket r WHERE r.sirketYetkilisi.id = :id")
     public Sirket findBySirketYetkilisi(@Param("id") Long id);
+
+    public Sirket findBySirketYetkilisi_id(Long id);
 
 }

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SirketYetkilisiRepository extends JpaRepository<SirketYetkilisi,Long> {
+
+    public SirketYetkilisi findByUser_id(Long id);
 }

@@ -8,19 +8,21 @@ export function useToken() {
 
 export function TokenProvider({ children }) {
   const [token, setToken] = useState(null);
-
+  const [isReady,setIsReady] = useState(false);
   const setAuthToken = (newToken) => {
     localStorage.setItem("AuthInfo", newToken)
     setToken(newToken);
   };
 
-  const setLogOutToken = () => {
-    setToken(null);
-  };
+  // const setLogOutToken = () =>{
+  //   localStorage.setItem("AuthInfo" , null)
+    
+  // };
 
   useEffect(() => {
     const localToken = localStorage.getItem("AuthInfo")
     setToken(localToken)
+    setIsReady(true);
   },[])
 
   // Token'i göndermek için bir işlev ekleyin
@@ -36,7 +38,7 @@ export function TokenProvider({ children }) {
   };
 
   return (
-    <TokenContext.Provider value={{ token, setAuthToken, getHeadersWithToken }}>
+    <TokenContext.Provider value={{ token, setAuthToken, getHeadersWithToken, isReady }}>
       {children}
     </TokenContext.Provider>
   );

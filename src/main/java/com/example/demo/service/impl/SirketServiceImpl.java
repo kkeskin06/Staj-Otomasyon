@@ -11,8 +11,10 @@ public class SirketServiceImpl implements SirketService {
 
     private final SirketRepository sirketRepository;
 
-    public SirketServiceImpl(SirketRepository sirketRepository){
+    private final SirketYetkilisiServiceImpl sirketYetkilisiService;
+    public SirketServiceImpl(SirketRepository sirketRepository, SirketYetkilisiServiceImpl sirketYetkilisiService){
         this.sirketRepository = sirketRepository;
+        this.sirketYetkilisiService = sirketYetkilisiService;
     }
 
     @Override
@@ -21,7 +23,8 @@ public class SirketServiceImpl implements SirketService {
     }
 
     @Override
-    public Sirket getSirketBySirketYetkilisi(Long id) {
-        return sirketRepository.findBySirketYetkilisi(id);
+    public Sirket getSirketBySirketYetkilisi() {
+
+        return sirketRepository.findBySirketYetkilisi_id(sirketYetkilisiService.getByUserId().getId());
     }
 }

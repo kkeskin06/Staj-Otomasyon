@@ -32,6 +32,7 @@ function App() {
           <Route path="sirketbilgileri" element={<><Topline/><SirketBilgileri/></>} />
           <Route path="ogrencieskibasvuru" element={<><Topline/><OgrenciEskiBasvuru/></>} />
           <Route path="uyeol" element={<Uyeol/>} />
+          <Route path="forbidden" element={<Forbidden/>} />
       </Routes>
     </BrowserRouter>
     </TokenProvider>

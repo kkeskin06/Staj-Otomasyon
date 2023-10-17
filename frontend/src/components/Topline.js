@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 import { useToken } from './TokenContext';
 function Topline(args) {
 
-  const {token,setLogOutToken} = useToken();
+  const {token} = useToken();
+
+  const setLogOutToken = () =>{
+    localStorage.setItem("AuthInfo" , null)
+    
+  };
 
   return (
     <nav class="navbar navbar-expand-lg " style={{ marginBottom: 25, backgroundColor: "#C9DFF1" }}>

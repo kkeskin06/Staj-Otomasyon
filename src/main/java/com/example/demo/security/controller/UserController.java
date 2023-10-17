@@ -1,5 +1,6 @@
 package com.example.demo.security.controller;
 
+import com.example.demo.security.domain.User;
 import com.example.demo.security.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,4 +21,11 @@ public class UserController {
     public String getCurrentUser(){
        return userService.currentUser();
     }
+
+
+    @GetMapping("/name")
+    public User getUser(){
+        return userService.getUserByName();
+    }
+
 }

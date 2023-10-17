@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 
+import com.example.demo.security.domain.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,5 +34,14 @@ public class SirketYetkilisi {
 
     @Column(name = "Sirket_id")
     private Long Sirket_id;
+
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+            })
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
 
 }

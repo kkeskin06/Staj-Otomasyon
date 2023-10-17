@@ -9,5 +9,5 @@ public interface SirketService {
 
     List<Sirket> getSirket();
 
-    Sirket getSirketBySirketYetkilisi(Long id);
+    Sirket getSirketBySirketYetkilisi();
 }

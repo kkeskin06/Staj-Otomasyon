@@ -5,7 +5,7 @@ function SirketBilgileri() {
     const {token, getHeadersWithToken} = useToken();
     const [sirket, setSirket] = useState("");
     useEffect(() => {
-        fetch('http://localhost:8080/sirket/get/'+2,getHeadersWithToken())
+        fetch('http://localhost:8080/sirket/get/detay',getHeadersWithToken())
             .then(reponse => reponse.json())
             .then(response => setSirket(response))
     }, [token])

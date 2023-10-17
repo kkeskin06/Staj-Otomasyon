@@ -95,6 +95,7 @@ function Login() {
 
 
                     <p>Üye Değil misin ? <a href="/uyeol">Kayıt Ol</a></p>
+                    {/* <h2>FRONTCU ARIYORUZ..</h2> */}
                   </div>
                 </div>
 
