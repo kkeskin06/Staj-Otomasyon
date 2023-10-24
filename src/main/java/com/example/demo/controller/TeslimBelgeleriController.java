@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.BasvuruFormu;
 import com.example.demo.entity.SicilFisi;
 import com.example.demo.entity.TeslimBelgeleri;
 import com.example.demo.service.TeslimBelgeleriService;
@@ -14,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/teslim")
-public class TeslimBelgelericontroller {
+public class TeslimBelgeleriController {
     @Autowired
     private TeslimBelgeleriService teslimBelgeleriService;
 
@@ -37,7 +36,7 @@ public class TeslimBelgelericontroller {
         return "belgeler teslim edildi.";
     }
 
-    @PreAuthorize("hasRole('ROLE_Ogrenci')")
+    @PreAuthorize("hasRole('ROLE_Sirket')")
     @PostMapping("/add/sicilfisi/{id}")
     public String sicilfisi(@RequestBody SicilFisi sicilFisi, @PathVariable("id") Long id){
         teslimBelgeleriService.saveSicilFisi(sicilFisi,id);

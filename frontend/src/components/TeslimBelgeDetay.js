@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Header, Icon, Modal } from 'semantic-ui-react'
-import { format } from 'date-fns'
+import { useToken } from "./TokenContext";
 
 
 function TeslimBelgeDetay() {
@@ -9,12 +9,23 @@ function TeslimBelgeDetay() {
     const [basvuru, setBasvurular] = useState([]);
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
-
+    const { token, isReady, getHeadersWithToken } = useToken();
     useEffect(() => {
-        fetch('http://localhost:8080/teslim/get/' + id)
+        if (isReady == true) {
+            fetch('http://localhost:8080/teslim/get/' + id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json'
+                },
+            })
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-    })
+        }
+        // fetch('http://localhost:8080/teslim/get/' + id)
+        //     .then(reponse => reponse.json())
+        //     .then(response => setBasvurular(response))
+    },[token])
 
     let tb_data = basvuru.map((item) => {
         return (
@@ -32,6 +43,11 @@ function TeslimBelgeDetay() {
     })
 
     let tb_data2 = basvuru.map((item) => {
+        const stajBitisTarihi = new Date(item.staj.stajBitistarihi);
+        const formattedDate = stajBitisTarihi.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+        const stajBaslangicTarihi = new Date(item.staj.stajBaslangicTarihi);
+        const formattedDate2 = stajBaslangicTarihi.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
         return (
 
@@ -39,8 +55,8 @@ function TeslimBelgeDetay() {
                 <td>{item.staj.stajTuru}</td>
                 <td>{item.staj.stajIcerigi}</td>
                 <td>{item.staj.stajGunSayisi}</td>
-                <td>{format(item.staj.stajBaslangicTarihi, 'dd/MM/Y --- dd MMMM')}</td>
-                <td>{format(item.staj.stajBitistarihi, 'dd/MM/Y --- dd MMMM')}</td>
+                <td>{formattedDate2}</td>
+                <td>{formattedDate}</td>
 
             </tr>
         )
@@ -52,13 +68,13 @@ function TeslimBelgeDetay() {
     let tb_data4 = basvuru.map((item) => {
         const onayla = (e) => {
             e.preventDefault()
-            fetch(`http://localhost:8080/teslim/edit/onay/${item.id}`)
+            fetch(`http://localhost:8080/teslim/edit/onay/${item.id}`,getHeadersWithToken())
             setOpen2(false)
         }
 
         const reddet = (e) => {
             e.preventDefault()
-            fetch(`http://localhost:8080/teslim/edit/red/${item.id}`)
+            fetch(`http://localhost:8080/teslim/edit/red/${item.id}`,getHeadersWithToken())
             setOpen(false)
         }
 

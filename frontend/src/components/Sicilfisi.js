@@ -1,8 +1,9 @@
 
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-
+import { useToken } from "./TokenContext";
 function Sicilfisi() {
+  const { token, isReady, getHeadersWithToken } = useToken();
   const { id } = useParams();
   const [calismaAlani, setCalismaAlani] = useState();
   const [calisilanGun, setCalisilanGun] = useState();
@@ -34,7 +35,8 @@ function Sicilfisi() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(fis)
     }).then((Response) => {

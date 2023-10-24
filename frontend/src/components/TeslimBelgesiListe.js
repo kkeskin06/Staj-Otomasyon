@@ -75,7 +75,7 @@ function TeslimBelgesiListe() {
             <tr key={item.id} style={{ textAlign: "center" }}>
 
                 <td>
-                    <Link to={`/sicilfisi/${item.id}`} class="btn btn-primary">Staj Raporu İndir</Link>
+                    <Link to={`/sicilfisi/${item.id}`} class="btn btn-secondary">Sicil Fisi Doldur</Link>
                     {/* <a href={`/sicilfisi/${item.id}`} class="btn btn-secondary">Sicil Fisi Doldur</a> */}
                 </td>
 
@@ -106,7 +106,7 @@ function TeslimBelgesiListe() {
                         </p>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button basic color='green' inverted onClick={() => fetch(`http://localhost:8080/teslim/edit/onay/${item.id}`)}>
+                        <Button basic color='green' inverted onClick={() => fetch(`http://localhost:8080/teslim/edit/onay/${item.id}`,getHeadersWithToken())}>
                             <Icon name='checkmark' /> evet
                         </Button>
                         <Button color='red' inverted onClick={() => setOpen2(false)}>
@@ -143,7 +143,7 @@ function TeslimBelgesiListe() {
                         </p>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button basic color='green' inverted onClick={() => fetch(`http://localhost:8080/teslim/edit/red/${item.id}`)}>
+                        <Button basic color='green' inverted onClick={() => fetch(`http://localhost:8080/teslim/edit/red/${item.id}`,getHeadersWithToken())}>
                             <Icon name='checkmark' /> evet
                         </Button>
                         <Button color='red' inverted onClick={() => setOpen(false)}>
