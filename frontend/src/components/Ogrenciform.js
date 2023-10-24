@@ -11,13 +11,22 @@ function Ogrenciform() {
     const [basvurular, setBasvurular] = useState([]);
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
-    const {token,getHeadersWithToken} = useToken();
+    const { token, isReady } = useToken();
 
     useEffect(() => {
-        fetch("http://localhost:8080/basvuru/detay/" + id ,getHeadersWithToken() )
-            .then(reponse => reponse.json())
-            .then(response => setBasvurular(response))
-    },[token])
+        if (isReady == true) {
+            fetch("http://localhost:8080/basvuru/detay/" + id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json'
+                },
+            })
+                .then(reponse => reponse.json())
+                .then(response => setBasvurular(response))
+        }
+
+    }, [token])
 
     let tb_data = basvurular.map((item) => {
         return (
@@ -38,6 +47,11 @@ function Ogrenciform() {
     })
 
     let tb_data2 = basvurular.map((item) => {
+        const stajBitisTarihi = new Date(item.staj.stajBitistarihi);
+        const formattedDate = stajBitisTarihi.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+        const stajBaslangicTarihi = new Date(item.staj.stajBaslangicTarihi);
+        const formattedDate2 = stajBaslangicTarihi.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
         return (
             <tr key={item.id} style={{ textAlign: "center" }}>
@@ -45,8 +59,8 @@ function Ogrenciform() {
                 <td>{item.staj.stajTuru}</td>
                 <td>{item.staj.stajIcerigi}</td>
                 <td>{item.staj.stajDevresi}</td>
-                <td>{format(item.staj.stajBaslangicTarihi, 'dd/MM/Y')}</td>
-                <td>{format(item.staj.stajBitistarihi, 'dd/MM/Y')}</td>
+                <td>{formattedDate2}</td>
+                <td>{formattedDate}</td>
                 <td>{item.staj.stajGunSayisi}</td>
             </tr>
 
@@ -78,19 +92,38 @@ function Ogrenciform() {
     let tb_data4 = basvurular.map((item) => {
         const onayla = (e) => {
             e.preventDefault()
-            fetch(`http://localhost:8080/basvuru/edit/${item.id}`)
-            setOpen2(false)
+
+            if (isReady == true) {
+                fetch(`http://localhost:8080/basvuru/edit/${item.id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    },
+                })
+                setOpen2(false)
+            }
+           
         }
 
         const reddet = (e) => {
             e.preventDefault()
-            fetch(`http://localhost:8080/basvuru/edit2/${item.id}`)
-            setOpen(false)
+            if (isReady == true) {
+                fetch(`http://localhost:8080/basvuru/edit2/${item.id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    },
+                })
+                setOpen(false)
+            }
+           
         }
         return (
             <tr key={item.id} style={{ textAlign: "center" }}>
                 <td><a href={`http://localhost:8080/files/${item.file_id}`} class="btn btn-primary">belgeyi indir</a></td>
-                
+
                 <td><Modal
                     basic
                     onClose={() => setOpen2(false)}
@@ -268,7 +301,7 @@ function Ogrenciform() {
                         <td>
                             Alan
                         </td>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
@@ -282,7 +315,7 @@ function Ogrenciform() {
                     <thead >
                         <tr style={{ textAlign: "center", color: "Black", fontWeight: "bold" }}>
 
-                          
+
                             <td>
 
                             </td>

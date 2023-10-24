@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.SirketYetkilisi;
 import com.example.demo.service.impl.SirketYetkilisiServiceImpl;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,11 @@ public class SirketYetkilisiController {
 
     public SirketYetkilisiController(SirketYetkilisiServiceImpl sirketYetkilisiService) {
         this.sirketYetkilisiService = sirketYetkilisiService;
+    }
+
+    @GetMapping
+    public SirketYetkilisi GetSirketYetkilisi(){
+        return sirketYetkilisiService.getByUserId();
     }
 
 

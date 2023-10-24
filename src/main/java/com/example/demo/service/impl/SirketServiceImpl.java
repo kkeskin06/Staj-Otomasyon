@@ -24,7 +24,6 @@ public class SirketServiceImpl implements SirketService {
 
     @Override
     public Sirket getSirketBySirketYetkilisi() {
-
         return sirketRepository.findBySirketYetkilisi_id(sirketYetkilisiService.getByUserId().getId());
     }
 }

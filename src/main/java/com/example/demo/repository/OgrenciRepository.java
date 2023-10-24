@@ -13,5 +13,5 @@ public interface OgrenciRepository extends JpaRepository<Ogrenci,Long> {
 
     public Ogrenci findByMail(String mail);
 
-
+    public Ogrenci findByUser_id(Long id);
 }

@@ -16,12 +16,16 @@ public interface BasvuruFormuRepository extends JpaRepository<BasvuruFormu,Long>
 
      Optional<List<BasvuruFormu>> findByOgrenci_id (Long id);
 
+
      List<BasvuruFormu> findByid(Long id);
      @Query("SELECT r FROM BasvuruFormu r WHERE r.ogrenci.id = :id")
      public BasvuruFormu findbyOgrenci_id (@Param("id") Long id);
 
      @Query("SELECT r FROM BasvuruFormu r WHERE r.sirket.sirket_id = :id")
-     Optional<List<BasvuruFormu>> findBySirket_sirket_id(@Param("id") Long id);
+    List<BasvuruFormu> findBySirket_sirket_id(@Param("id") Long id);
+
+
+//     Optional<List<BasvuruFormu>> findBySirket_sirket_id(Long id);
 
      @Query("SELECT r FROM BasvuruFormu r WHERE r.ogrenci.ad LIKE %?1% OR r.ogrenci.ogrno LIKE %?1%")
      List<BasvuruFormu> findsearch(String keyword);

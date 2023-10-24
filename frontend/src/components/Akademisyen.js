@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useToken } from './TokenContext';
 import { Link } from "react-router-dom";
 function Akademisyen() {
-    const { token } = useToken();
+    const { token, getHeadersWithToken, isReady } = useToken();
+
+    const [akademisyen, setAkademisyen] = useState({});
+
+
+    useEffect(() => {
+        if (isReady == true) {
+            fetch("http://localhost:8080/akademisyen", getHeadersWithToken())
+                .then(reponse => reponse.json())
+                .then(response => setAkademisyen(response))
+        }
+    }, [token])
+
     return (
 
         <div class="container">
@@ -21,13 +33,11 @@ function Akademisyen() {
 
                     <div class="row">
                         <ul class="list-group" >
-                            <li class="list-group-item list-group-item-primary">alper</li>
+                            <li class="list-group-item list-group-item-primary">{akademisyen.akademisye_adi}</li>
                             <br></br>
-                            <li class="list-group-item list-group-item-primary">Kılıç</li>
+                            <li class="list-group-item list-group-item-primary">{akademisyen.akademisyen_soyadi}</li>
                             <br></br>
-                            <li class="list-group-item list-group-item-primary">Bilgisayar Mühendisliği</li>
-                            <br></br>
-                            <li class="list-group-item list-group-item-primary">akilic@ktun.edu.tr</li>
+                            <li class="list-group-item list-group-item-primary">{akademisyen.akademisyen_mail}</li>
                         </ul>
                     </div>
 

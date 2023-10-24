@@ -2,18 +2,13 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.*;
 import com.example.demo.repository.*;
+import com.example.demo.security.service.UserService;
 import com.example.demo.service.BasvuruFormuService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.CoroutinesUtils;
-import org.springframework.core.KotlinDetector;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,9 +25,13 @@ public class BasvuruFormuServiceImpl implements BasvuruFormuService {
 
     private final BasvuruFormuRepo repo;
 
-    public BasvuruFormuServiceImpl(BasvuruFormuRepository basvuruFormuRepository,OgrenciRepository ogrenciRepository,
-                                   StajRepository stajRepository,SirketServiceImpl sirketService,SirketRepository sirketRepository,
-                                   FileRepository fileRepository,BasvuruFormuRepo repo){
+    private final UserService userService;
+
+    private final SirketYetkilisiRepository sirketYetkilisiRepository;
+
+    public BasvuruFormuServiceImpl(BasvuruFormuRepository basvuruFormuRepository, OgrenciRepository ogrenciRepository,
+                                   StajRepository stajRepository, SirketServiceImpl sirketService, SirketRepository sirketRepository,
+                                   FileRepository fileRepository, BasvuruFormuRepo repo, UserService userService, SirketYetkilisiRepository sirketYetkilisiRepository){
         this.basvuruFormuRepository = basvuruFormuRepository;
         this.ogrenciRepository=ogrenciRepository;
         this.stajRepository=stajRepository;
@@ -40,6 +39,8 @@ public class BasvuruFormuServiceImpl implements BasvuruFormuService {
         this.sirketRepository = sirketRepository;
         this.fileRepository = fileRepository;
         this.repo=repo;
+        this.userService = userService;
+        this.sirketYetkilisiRepository = sirketYetkilisiRepository;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class BasvuruFormuServiceImpl implements BasvuruFormuService {
             ogrenci.setOgrno(basvuruFormu.getOgrenci().getOgrno());
             ogrenci.setTcno(basvuruFormu.getOgrenci().getTcno());
             ogrenci.setTelno(basvuruFormu.getOgrenci().getTelno());
-
+            ogrenci.setUser(userService.getUserByName());
 
             basvuruFormu.setOgrenci(ogrenci);
         }
@@ -113,8 +114,8 @@ public class BasvuruFormuServiceImpl implements BasvuruFormuService {
     }
 
     @Override
-    public List<BasvuruFormu> getBasvuruOgrenciId(Long id) {
-        Optional<List<BasvuruFormu>> basvuruFormu = basvuruFormuRepository.findByOgrenci_id(id);
+    public List<BasvuruFormu> getBasvuruOgrenciId() {
+        Optional<List<BasvuruFormu>> basvuruFormu = basvuruFormuRepository.findByOgrenci_id(ogrenciRepository.findByUser_id(userService.getUserByName().getId()).getId());
         if(basvuruFormu.isPresent()){
             return basvuruFormu.get();
         }
@@ -153,18 +154,14 @@ public class BasvuruFormuServiceImpl implements BasvuruFormuService {
     }
 
     @Override
-    public List<BasvuruFormu> getBasvuruSirketId(Long id) {
-        Optional<List<BasvuruFormu>> basvuruFormu = basvuruFormuRepository.findBySirket_sirket_id(id);
-        if(basvuruFormu.isPresent()){
-            return basvuruFormu.get();
-        }
-        return null;
+    public List<BasvuruFormu> getBasvuruSirketId() {
+        List<BasvuruFormu> basvuruFormu = basvuruFormuRepository.findBySirket_sirket_id(sirketYetkilisiRepository.findByUser_id(userService.getUserByName().getId()).getSirket_id());
+        return basvuruFormu;
     }
 
     @Override
     public List<BasvuruFormu> getBasvuruById(Long id) {
         List<BasvuruFormu> basvuruFormu = basvuruFormuRepository.findByid(id);
-
         return basvuruFormu;
     }
 

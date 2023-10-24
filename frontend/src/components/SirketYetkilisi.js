@@ -6,14 +6,10 @@ function SirketYetkilisi(){
     const {token,isReady,getHeadersWithToken} = useToken();
     const [user,setUser] = useState({});
 
-    // const requestOptions = {
-    //     method: 'GET',
-    //     headers: { 'Authorization' : `Bearer ${token}`},
-    // };
-   
+
     useEffect(() => {
         if(isReady == true){
-            fetch("http://localhost:8080/api/user/name",getHeadersWithToken())
+            fetch("http://localhost:8080/sirketyetkilisi",getHeadersWithToken())
             .then(reponse => reponse.json())
             .then(response => setUser(response))
         }
@@ -36,13 +32,13 @@ function SirketYetkilisi(){
             
             <div className="row">
             <ul className="list-group" >
-                    <li className="list-group-item list-group-item-primary">{JSON.stringify(user)}</li>
+                    <li className="list-group-item list-group-item-primary">{user.ad}</li>
                     <br></br>
-                    <li className="list-group-item list-group-item-primary">Hanım</li>                 
+                    <li className="list-group-item list-group-item-primary">{user.soyad}</li>                 
                     <br></br>
-                    <li className="list-group-item list-group-item-primary">Getir</li>
+                    <li className="list-group-item list-group-item-primary">{user.unvan}</li>
                     <br></br>
-                    <li className="list-group-item list-group-item-primary">chanım@getir.com.tr</li>
+                    <li className="list-group-item list-group-item-primary">{user.telno}</li>
                 </ul>                                                             
             </div>
                       

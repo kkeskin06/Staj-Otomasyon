@@ -7,7 +7,8 @@ function OgrenciEskiBasvuru() {
     const {token,getHeadersWithToken} = useToken();
     const [basvurular, setBasvurular] = useState([]);
     useEffect(() => {
-        fetch("http://localhost:8080/basvuru/get/" + 527,getHeadersWithToken()) 
+        
+        fetch("http://localhost:8080/basvuru/get/get",getHeadersWithToken()) 
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
     }, [token])

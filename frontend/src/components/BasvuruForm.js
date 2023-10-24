@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useToken } from "./TokenContext";
 function BasvuruForm(){
     const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ function BasvuruForm(){
     const [file_id,setFile_id] = useState("")
     const [email,setEmail] = useState("")
     const [vergino,setVergino] = useState("")
+    const {token,isReady,getHeadersWithToken} = useToken();
     //const [ogrenci,setOgrenci] = useState(null)
     const handleFile =(e) =>{
       e.preventDefault()
@@ -45,9 +47,12 @@ function BasvuruForm(){
       const formData = new FormData()
       formData.append('file',files)
       fetch("http://localhost:8080/files/post",{
-        mode: 'cors',
         method:'POST',
-        enctype:"multipart/form-data",      
+        enctype:"multipart/form-data",
+        headers:{'Content-Type': 'application/json',
+        'Authorization' : `Bearer ${token}`,
+        'Accept': 'application/json'
+        },      
         body:formData
       }).then((Response) => {
         if(Response.status == 200){
@@ -102,12 +107,13 @@ function BasvuruForm(){
       }
       
       fetch("http://localhost:8080/basvuru/add",{
-        mode: 'cors',
         method:'POST',
         headers:{'Content-Type': 'application/json',
+        'Authorization' : `Bearer ${token}`,
         'Accept': 'application/json'
         },
-        body:JSON.stringify(basvuru)       
+        body:JSON.stringify(basvuru)  
+             
       }).then((Response) => {
         if(Response.status == 200){
           alert("Staj Başvurusu Başarılı")

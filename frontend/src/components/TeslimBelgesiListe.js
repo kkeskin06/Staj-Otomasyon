@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Header, Icon, Modal } from 'semantic-ui-react'
-import { format } from 'date-fns'
+import { useToken } from "./TokenContext";
+import { Link } from "react-router-dom";
 
 
 function TeslimBelgesiListe() {
@@ -9,11 +10,19 @@ function TeslimBelgesiListe() {
     const [basvuru, setBasvurular] = useState([]);
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
-
+    const { token, isReady, getHeadersWithToken } = useToken();
     useEffect(() => {
-        fetch('http://localhost:8080/teslim/getTeslimbelgeleri/' + id)
-            .then(reponse => reponse.json())
-            .then(response => setBasvurular(response))
+        if (isReady == true) {
+            fetch('http://localhost:8080/teslim/getTeslimbelgeleri/' + id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json'
+                },
+            })
+                .then(reponse => reponse.json())
+                .then(response => setBasvurular(response))
+        }
     })
 
     let tb_data = basvuru.map((item) => {
@@ -32,22 +41,31 @@ function TeslimBelgesiListe() {
     })
 
     let tb_data2 = basvuru.map((item) => {
+        const stajBitisTarihi = new Date(item.staj.stajBitistarihi);
+        const formattedDate = stajBitisTarihi.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+        const stajBaslangicTarihi = new Date(item.staj.stajBaslangicTarihi);
+        const formattedDate2 = stajBaslangicTarihi.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
         return (
             <tr key={item.id} style={{ textAlign: "center" }}>
                 <td>{item.staj.stajTuru}</td>
                 <td>{item.staj.stajIcerigi}</td>
                 <td>{item.staj.stajGunSayisi}</td>
-                <td>{format(item.staj.stajBaslangicTarihi, 'dd/MM/Y --- dd MMMM')}</td>
-                <td>{format(item.staj.stajBitistarihi, 'dd/MM/Y --- dd MMMM')}</td>
+                <td>{formattedDate2}</td>
+                <td>{formattedDate}</td>
             </tr>
         )
 
     })
 
     let tb_data22 = basvuru.map((item) => {
+        const stajBaslangicTarihi = new Date(item.staj.stajBaslangicTarihi);
+        const formattedDate2 = stajBaslangicTarihi.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
         return (
-          
-                format(item.staj.stajBaslangicTarihi, 'dd/MM/Y --- dd MMMM')
+
+            formattedDate2
         )
 
     })
@@ -56,7 +74,10 @@ function TeslimBelgesiListe() {
         return (
             <tr key={item.id} style={{ textAlign: "center" }}>
 
-                <td><a href={`/sicilfisi/${item.id}`} class="btn btn-secondary">Sicil Fisi Doldur</a></td>
+                <td>
+                    <Link to={`/sicilfisi/${item.id}`} class="btn btn-primary">Staj Raporu İndir</Link>
+                    {/* <a href={`/sicilfisi/${item.id}`} class="btn btn-secondary">Sicil Fisi Doldur</a> */}
+                </td>
 
             </tr>
         )
@@ -138,7 +159,10 @@ function TeslimBelgesiListe() {
     let tb_data5 = basvuru.map((item) => {
         return (
             <tr key={item.id} style={{ textAlign: "center" }}>
-                <td><a href={`http://localhost:8080/files/${item.stajRaporu}`} class="btn btn-primary">Staj Raporu İndir</a></td>
+                <td>
+                    {/* <Link to={`http://localhost:8080/files/${item.stajRaporu}`} class="btn btn-primary">Staj Raporu İndir</Link> */}
+                    <a href={`http://localhost:8080/files/${item.stajRaporu}`} class="btn btn-primary">Staj Raporu İndir</a>
+                </td>
                 <td><a href={`http://localhost:8080/files/${item.defterIcKapagi}`} class="btn btn-primary">İc Kapak İndir</a></td>
             </tr>
         )
@@ -230,56 +254,56 @@ function TeslimBelgesiListe() {
                     </tbody>
                 </table>
                 <div class="card">
-                <div class="card-header">
-                    Staj Defteri 1. Hafta
+                    <div class="card-header">
+                        Staj Defteri 1. Hafta
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>{datahafta1}</p>
+                            <footer class="blockquote-footer">{tb_data22}-{tb_data22}</footer>
+
+                        </blockquote>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p>{datahafta1}</p>
-                        <footer class="blockquote-footer">{tb_data22}-{tb_data22}</footer>
-                       
-                    </blockquote>
+                <br></br>
+                <div class="card">
+                    <div class="card-header">
+                        Staj Defteri 2. Hafta
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>{datahafta2}</p>
+                            <footer class="blockquote-footer">{tb_data22}-{tb_data22}</footer>
+
+                        </blockquote>
+                    </div>
                 </div>
-            </div>
-            <br></br>
-            <div class="card">
-                <div class="card-header">
-                    Staj Defteri 2. Hafta
+                <br></br>
+                <div class="card">
+                    <div class="card-header">
+                        Staj Defteri 3. Hafta
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>{datahafta3}</p>
+                            <footer class="blockquote-footer">{tb_data22}-{tb_data22}</footer>
+
+                        </blockquote>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p>{datahafta2}</p>
-                        <footer class="blockquote-footer">{tb_data22}-{tb_data22}</footer>
-                       
-                    </blockquote>
+                <br></br>
+                <div class="card">
+                    <div class="card-header">
+                        Staj Defteri 4. Hafta
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>{datahafta4}</p>
+                            <footer class="blockquote-footer">{tb_data22}-{tb_data22}</footer>
+
+                        </blockquote>
+                    </div>
                 </div>
-            </div>
-            <br></br>
-            <div class="card">
-                <div class="card-header">
-                    Staj Defteri 3. Hafta
-                </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p>{datahafta3}</p>
-                        <footer class="blockquote-footer">{tb_data22}-{tb_data22}</footer>
-                       
-                    </blockquote>
-                </div>
-            </div>
-            <br></br>
-            <div class="card">
-                <div class="card-header">
-                    Staj Defteri 4. Hafta
-                </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p>{datahafta4}</p>
-                        <footer class="blockquote-footer">{tb_data22}-{tb_data22}</footer>
-                       
-                    </blockquote>
-                </div>
-            </div>
                 <table className="table table-Secondary table-striped">
                     <thead>
                         <tr style={{ textAlign: "center", color: "Black", fontWeight: "bold" }}>
@@ -303,7 +327,7 @@ function TeslimBelgesiListe() {
 
                             </td>
                         </tr>
-                        
+
                     </thead>
                     <tbody>
                         {tb_data3}
@@ -327,7 +351,7 @@ function TeslimBelgesiListe() {
                 </table>
 
             </div >
-          
+
         </div>
     )
 }

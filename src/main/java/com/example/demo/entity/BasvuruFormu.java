@@ -24,7 +24,11 @@ public class BasvuruFormu {
     @JoinColumn(name = "staj_staj_id")
     private Staj staj;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE,
+            })
     @JoinColumn(name = "sirket_sirket_id")
     private Sirket sirket;
 

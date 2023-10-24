@@ -27,7 +27,7 @@ export function TokenProvider({ children }) {
 
   // Token'i göndermek için bir işlev ekleyin
   const getHeadersWithToken = () => {
-    console.log(token)
+    // console.log(token)
     return {
       headers: {
         'Content-Type': 'application/json',

@@ -48,9 +48,9 @@ public class BasvuruFormuController {
         return "basvuru eklendi";
     }
     @PreAuthorize("hasRole('ROLE_Akademisyen') OR hasRole('ROLE_Ogrenci')")
-    @GetMapping("/get/{id}")
-    public ResponseEntity<List<BasvuruFormu>> getbyogrenci(@PathVariable("id") Long id){
-        List<BasvuruFormu> basvuruFormu = basvuruFormuService.getBasvuruOgrenciId(id);
+    @GetMapping("/get/get")
+    public ResponseEntity<List<BasvuruFormu>> getbyogrenci(){
+        List<BasvuruFormu> basvuruFormu = basvuruFormuService.getBasvuruOgrenciId();
         return ResponseEntity.ok(basvuruFormu);
     }
 
@@ -70,9 +70,9 @@ public class BasvuruFormuController {
         return" ResponseEntity.ok(resultBasvuruFormu)";
     }
     @PreAuthorize("hasRole('ROLE_Sirket')")
-    @GetMapping("/getbysirket/{id}")
-    public ResponseEntity<List<BasvuruFormu>> getbysirket(@PathVariable("id") Long id){
-        List<BasvuruFormu> sirket = basvuruFormuService.getBasvuruSirketId(id);
+    @GetMapping("/getbysirket")
+    public ResponseEntity<List<BasvuruFormu>> getbysirket(){
+        List<BasvuruFormu> sirket = basvuruFormuService.getBasvuruSirketId();
         return ResponseEntity.ok(sirket);
     }
 

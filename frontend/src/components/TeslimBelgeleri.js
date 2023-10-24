@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useToken } from './TokenContext';
 
 function TeslimBelgeleri() {
-  
+
 
   const [files, setFiles] = useState()
   const [files2, setfiles2] = useState()
@@ -15,7 +15,7 @@ function TeslimBelgeleri() {
   const [hafta2, setHafta2] = useState()
   const [hafta3, setHafta3] = useState()
   const [hafta4, setHafta4] = useState()
-  const {token} = useToken();
+  const { token } = useToken();
   const handleFile = (e) => {
     e.preventDefault()
     setFiles(e.target.files[0])
@@ -30,16 +30,16 @@ function TeslimBelgeleri() {
     e.preventDefault()
     const formData = new FormData()
     formData.append('file', files)
-    
+
     fetch("http://localhost:8080/files/post", {
       method: 'POST',
       enctype: "multipart/form-data",
       body: formData,
-      headers:{
-        'Authorization' : `Bearer ${token}`,
+      headers: {  
+      'Authorization': `Bearer ${token}`,      
       }
-     
-     
+
+
     }).then((Response) => {
       if (Response.status == 200) {
         Response.json().then((item) => {
@@ -65,8 +65,8 @@ function TeslimBelgeleri() {
       method: 'POST',
       enctype: "multipart/form-data",
       body: formData,
-      headers:{
-        'Authorization' : `Bearer ${token}`,
+      headers: {
+        'Authorization': `Bearer ${token}`,
       }
     }).then((Response) => {
       if (Response.status == 200) {
@@ -95,12 +95,12 @@ function TeslimBelgeleri() {
       "hafta4": hafta4,
     }
 
-    fetch("http://localhost:8080/teslim/add/" + 527, {
+    fetch("http://localhost:8080/teslim/add/" , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization' : `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(teslimat)
     }).then((Response) => {

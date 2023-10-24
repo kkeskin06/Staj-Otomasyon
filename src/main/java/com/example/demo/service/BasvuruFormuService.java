@@ -11,7 +11,7 @@ public interface BasvuruFormuService {
     List<BasvuruFormu> getBasvuru();
     public BasvuruFormu saveBasvuruFormu(BasvuruFormu basvuruFormu);
 
-    List<BasvuruFormu>  getBasvuruOgrenciId(Long id);
+    List<BasvuruFormu>  getBasvuruOgrenciId();
 
     public BasvuruFormu getbasvuruOgrenciId(Long id);
 
@@ -19,7 +19,7 @@ public interface BasvuruFormuService {
 
     public BasvuruFormu updateBasvuru2(Long id );
 
-    List<BasvuruFormu>  getBasvuruSirketId(Long id);
+    List<BasvuruFormu>  getBasvuruSirketId();
 
     List<BasvuruFormu> getBasvuruById(Long id);
 

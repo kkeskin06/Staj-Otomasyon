@@ -58,7 +58,7 @@ public class FilesController {
 
         return fileResponse;
     }
-    @PreAuthorize("hasRole('ROLE_Ogrenci') OR hasRole('ROLE_Akademisyen')")
+//    @PreAuthorize("hasRole('ROLE_Ogrenci') OR hasRole('ROLE_Akademisyen') OR hasRole('ROLE_Sirket')")
     @GetMapping("{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String id) {
         Optional<FileEntity> fileEntityOptional = fileService.getFile(id);

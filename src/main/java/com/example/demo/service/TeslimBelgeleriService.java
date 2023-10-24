@@ -15,7 +15,7 @@ public interface TeslimBelgeleriService {
 
     List<TeslimBelgeleri> getTeslimBelgeleriByOgrenci_id(Long id);
 
-    public TeslimBelgeleri saveTeslimBelgeleri(TeslimBelgeleri teslimBelgeleri,Long id);
+    public TeslimBelgeleri saveTeslimBelgeleri(TeslimBelgeleri teslimBelgeleri);
 
     public Optional<TeslimBelgeleri> saveSicilFisi(SicilFisi sicilFisi, Long id);
 

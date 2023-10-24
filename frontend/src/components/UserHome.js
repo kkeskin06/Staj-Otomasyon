@@ -1,15 +1,17 @@
 import {React , useEffect, useState} from "react";
 import { Link } from "react-router-dom";
+import { useToken } from './TokenContext';
 function UserHome(){
-    /*const [ogrenciler,setOgrenciler] = useState([])
-    useEffect(()=>{
-        fetch('http://localhost:8080/ogrenci/get/')
-        .then(reponse => reponse.json())
-        .then(response => setOgrenciler(response))     
-      })
-    let data = ogrenciler.map((item)=>{
-        
-    })*/
+    const [ogrenci, setOgrenci] = useState({});
+    const { token, getHeadersWithToken, isReady } = useToken();
+
+    useEffect(() => {
+        if (isReady == true) {
+            fetch("http://localhost:8080/ogrenci", getHeadersWithToken())
+                .then(reponse => reponse.json())
+                .then(response => setOgrenci(response))
+        }
+    }, [token])
     return(
         <div class="container">
             <div className="row">
@@ -27,17 +29,17 @@ function UserHome(){
                 
                 <div class="row">
                 <ul class="list-group" >
-                        <li class="list-group-item list-group-item-primary" >zafer</li>
+                        <li class="list-group-item list-group-item-primary" >{ogrenci.ad}</li>
                         <br></br>
-                        <li class="list-group-item list-group-item-primary">güney</li>
+                        <li class="list-group-item list-group-item-primary">{ogrenci.soyad}</li>
                         <br></br>
-                        <li class="list-group-item list-group-item-primary">191213001</li>
+                        <li class="list-group-item list-group-item-primary">{ogrenci.ogrno}</li>
                         <br></br>
-                        <li class="list-group-item list-group-item-primary">Bilgisayar Mühendisliği</li>
+                        <li class="list-group-item list-group-item-primary">{ogrenci.sinif} . Sınıf</li>
                         <br></br>
-                        <li class="list-group-item list-group-item-primary">3.Sınıf</li>
+                        <li class="list-group-item list-group-item-primary">{ogrenci.telno}</li>
                         <br></br>
-                        <li class="list-group-item list-group-item-primary">+90 541 852 3265</li>
+                        <li class="list-group-item list-group-item-primary">{ogrenci.mail}</li>
                     </ul>                   
                     <div className="col-3"></div>                 
                     {/* <button type="button" class="btn btn-primary" style={{width:140,height:40,marginTop:15}}>Profili Güncelle</button>  */}

@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AkademisyenRepository extends JpaRepository<Akademisyen,Long> {
 
+    public Akademisyen findByUser_id(Long id);
 }

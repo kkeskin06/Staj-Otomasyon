@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/ogrenci")
-@CrossOrigin
+
 public class OgrenciController {
     @Autowired
     private OgrenciService ogrenciService;
@@ -33,6 +33,12 @@ public class OgrenciController {
     public ResponseEntity<List<Ogrenci>> getAll(){
         List<Ogrenci> ogrenci = ogrenciService.getAll();
         return ResponseEntity.ok(ogrenci);
+    }
+
+
+    @GetMapping
+    public Ogrenci getByUser_id(){
+        return ogrenciService.getByUser_id();
     }
 
 }

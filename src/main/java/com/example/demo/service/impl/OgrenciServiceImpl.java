@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Ogrenci;
 import com.example.demo.repository.OgrenciRepository;
+import com.example.demo.security.service.UserService;
 import com.example.demo.service.OgrenciService;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,11 @@ public class OgrenciServiceImpl implements OgrenciService {
 
     private final OgrenciRepository ogrenciRepository;
 
-    public OgrenciServiceImpl (OgrenciRepository ogrenciRepository){
+    private final UserService userService;
+
+    public OgrenciServiceImpl (OgrenciRepository ogrenciRepository, UserService userService){
         this.ogrenciRepository = ogrenciRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -33,6 +37,11 @@ public class OgrenciServiceImpl implements OgrenciService {
     @Override
     public List<Ogrenci> getAll() {
         return ogrenciRepository.findAll();
+    }
+
+    @Override
+    public Ogrenci getByUser_id() {
+        return ogrenciRepository.findByUser_id(userService.getUserByName().getId());
     }
     //Dependency Injection
 

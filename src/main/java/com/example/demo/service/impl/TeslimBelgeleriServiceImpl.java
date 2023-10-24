@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.*;
 import com.example.demo.repository.SicilFisiRepository;
 import com.example.demo.repository.TeslimBelgeleriRepository;
+import com.example.demo.security.service.UserService;
 import com.example.demo.service.BasvuruFormuService;
 import com.example.demo.service.TeslimBelgeleriService;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,18 @@ public class TeslimBelgeleriServiceImpl implements TeslimBelgeleriService {
 
     private final SicilFisiRepository sicilFisiRepository;
 
+    private final UserService userService;
 
-    public TeslimBelgeleriServiceImpl(TeslimBelgeleriRepository teslimBelgeleriRepository,BasvuruFormuService basvuruFormuService,
-                                      SicilFisiRepository sicilFisiRepository){
+    private final OgrenciServiceImpl ogrenciService;
+
+
+    public TeslimBelgeleriServiceImpl(TeslimBelgeleriRepository teslimBelgeleriRepository, BasvuruFormuService basvuruFormuService,
+                                      SicilFisiRepository sicilFisiRepository, UserService userService, OgrenciServiceImpl ogrenciService){
         this.teslimBelgeleriRepository = teslimBelgeleriRepository;
         this.basvuruFormuService = basvuruFormuService;
         this.sicilFisiRepository = sicilFisiRepository;
+        this.userService = userService;
+        this.ogrenciService = ogrenciService;
     }
 
 
@@ -49,11 +56,11 @@ public class TeslimBelgeleriServiceImpl implements TeslimBelgeleriService {
     }
 
     @Override
-    public TeslimBelgeleri saveTeslimBelgeleri(TeslimBelgeleri teslimBelgeleri,Long id) {
+    public TeslimBelgeleri saveTeslimBelgeleri(TeslimBelgeleri teslimBelgeleri) {
 
         Ogrenci ogrenci = new Ogrenci();
-
-        var basvuru = basvuruFormuService.getbasvuruOgrenciId(id);
+        Ogrenci ogrenciId = ogrenciService.getByUser_id();
+        var basvuru = basvuruFormuService.getbasvuruOgrenciId(ogrenciId.getId());
 
         ogrenci.setId(basvuru.getOgrenci().getId());
         ogrenci.setAd(basvuru.getOgrenci().getAd());

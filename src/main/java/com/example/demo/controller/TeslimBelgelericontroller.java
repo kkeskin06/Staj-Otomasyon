@@ -31,9 +31,9 @@ public class TeslimBelgelericontroller {
     }
 
     @PreAuthorize("hasRole('ROLE_Ogrenci')")
-    @PostMapping("/add/{id}")
-    public String save(@RequestBody TeslimBelgeleri teslimBelgeleri, @PathVariable("id") Long id){
-        teslimBelgeleriService.saveTeslimBelgeleri(teslimBelgeleri,id);
+    @PostMapping("/add")
+    public String save(@RequestBody TeslimBelgeleri teslimBelgeleri){
+        teslimBelgeleriService.saveTeslimBelgeleri(teslimBelgeleri);
         return "belgeler teslim edildi.";
     }
 

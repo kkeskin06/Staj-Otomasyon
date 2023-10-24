@@ -12,4 +12,6 @@ public interface OgrenciService {
     public Ogrenci getOgrenci(Long id);
 
     public List<Ogrenci> getAll();
+
+    public Ogrenci getByUser_id();
 }
