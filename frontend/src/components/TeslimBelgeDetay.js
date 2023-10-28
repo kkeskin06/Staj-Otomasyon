@@ -148,7 +148,7 @@ function TeslimBelgeDetay() {
     let tb_data5 = basvuru.map((item) => {
         return (
             <tr key={item.id} style={{ textAlign: "center" }}>
-                <td><a href={`http://localhost:8080/files/${item.defterSayfalari}`} class="btn btn-primary">Staj Defteri İndir</a></td>
+                {/* <td><a href={`http://localhost:8080/files/${item.defterSayfalari}`} class="btn btn-primary">Staj Defteri İndir</a></td> */}
                 <td><a href={`http://localhost:8080/files/${item.stajRaporu}`} class="btn btn-primary">Staj Raporu İndir</a></td>
                 <td><a href={`http://localhost:8080/files/${item.defterIcKapagi}`} class="btn btn-primary">İç Kapak İndir</a></td>
             </tr>

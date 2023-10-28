@@ -30,6 +30,7 @@ public interface BasvuruFormuRepository extends JpaRepository<BasvuruFormu,Long>
      @Query("SELECT r FROM BasvuruFormu r WHERE r.ogrenci.ad LIKE %?1% OR r.ogrenci.ogrno LIKE %?1%")
      List<BasvuruFormu> findsearch(String keyword);
 
+     List<BasvuruFormu> findByOgrenci_adContaining(String keyword);
      List<BasvuruFormu> findByOrderByOgrenci_ogrnoAsc();
 
      List<BasvuruFormu> findByOrderByOgrenci_ogrnoDesc();

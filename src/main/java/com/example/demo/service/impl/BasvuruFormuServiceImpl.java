@@ -181,9 +181,8 @@ public class BasvuruFormuServiceImpl implements BasvuruFormuService {
     @Override
     public List<BasvuruFormu> search(String keyword) {
         if (keyword != null){
-            return basvuruFormuRepository.findsearch(keyword);
+            return basvuruFormuRepository.findByOgrenci_adContaining(keyword);
         }
-
         return null;
     }
 

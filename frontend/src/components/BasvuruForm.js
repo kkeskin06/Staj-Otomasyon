@@ -49,11 +49,10 @@ function BasvuruForm(){
       fetch("http://localhost:8080/files/post",{
         method:'POST',
         enctype:"multipart/form-data",
-        headers:{'Content-Type': 'application/json',
+        body:formData,
+        headers:{
         'Authorization' : `Bearer ${token}`,
-        'Accept': 'application/json'
         },      
-        body:formData
       }).then((Response) => {
         if(Response.status == 200){
           Response.json().then((item) => {

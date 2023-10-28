@@ -8,13 +8,13 @@ function BasvuruListe() {
     // const navigate = useNavigate();
     const [basvurular, setBasvurular] = useState([]);
     const [pageNo, setPageNo] = useState();
-    const {token, getHeadersWithToken } = useToken();
+    const { token, getHeadersWithToken } = useToken();
 
     useEffect(() => {
-        fetch("http://localhost:8080/basvuru/get",getHeadersWithToken())
+        fetch("http://localhost:8080/basvuru/get", getHeadersWithToken())
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-    },[token])
+    }, [token])
 
 
     let tb_data = basvurular.map((item) => {
@@ -39,7 +39,7 @@ function BasvuruListe() {
                     Onay Bekliyor
                 </td>}
                 <td>
-                <Link to={`/ogrenciform/${item.id}`} class="btn btn-info">Detay</Link></td>
+                    <Link to={`/ogrenciform/${item.id}`} class="btn btn-info">Detay</Link></td>
 
             </tr>
         )
@@ -50,16 +50,13 @@ function BasvuruListe() {
 
     })
     const [keyword, setKeyword] = useState();
+
     const aramayap = (e) => {
         e.preventDefault()
 
-        fetch("http://localhost:8080/basvuru/search/" + keyword)
+        fetch("http://localhost:8080/basvuru/search/" + keyword,getHeadersWithToken())
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-        console.log(basvurular)
-
-
-
     }
 
     const page = (e) => {
@@ -68,7 +65,7 @@ function BasvuruListe() {
         fetch("http://localhost:8080/basvuru/pageable/" + 0)
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-       
+
 
     }
     const page2 = (e) => {
@@ -77,7 +74,7 @@ function BasvuruListe() {
         fetch("http://localhost:8080/basvuru/pageable/" + 1)
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-       
+
 
     }
     const page3 = (e) => {
@@ -86,7 +83,7 @@ function BasvuruListe() {
         fetch("http://localhost:8080/basvuru/pageable/" + 2)
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-       
+
 
     }
     const page4 = (e) => {
@@ -95,17 +92,23 @@ function BasvuruListe() {
         fetch("http://localhost:8080/basvuru/pageable/" + 3)
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-       
+
 
     }
 
-    const refresh = () => { window.location.reload(true) }
+    // const refresh = () => {window.location.reload(true)}
 
     const sirala = () => {
         fetch("http://localhost:8080/basvuru/sirala")
             .then(reponse => reponse.json())
             .then(response => setBasvurular(response))
-
+            .then((Response) => {
+                if(Response.status == 404){   
+                  alert("Boş arama yapamazsın")
+                }
+              }).catch((err)=>{
+                console.log(err);
+              });
     }
 
     const sirala2 = () => {
@@ -143,16 +146,16 @@ function BasvuruListe() {
                 <input type="text" class="form-control" placeholder="İsime veya öğrenci numarasına Göre Ara" onChange={(e) => setKeyword(e.target.value)} aria-label="Recipient's username" aria-describedby="basic-addon2" />
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit" onClick={aramayap}>Ara</button>
-                   
+
                 </div>
-                <button class="btn btn-outline-secondary" type="button" onClick={refresh}>Listeye Geri Dön</button>
+                {/* <button class="btn btn-outline-secondary" type="button" onClick={refresh}>Listeye Geri Dön</button> */}
             </div>
             <table className="table table-Secondary table-striped">
                 <thead >
                     <tr style={{ textAlign: "center", color: "Black", fontWeight: "bold" }}>
                         <td>
                             Öğrenci No
-                           
+
                             <Icon name='angle double up' size='large' onClick={sirala} />
                             <Icon name='angle double down' size='large' onClick={sirala2} />
 
@@ -192,12 +195,12 @@ function BasvuruListe() {
             </table>
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-                   
+
                     <li class="page-item"><a class="page-link" onClick={page} >1</a></li>
                     <li class="page-item"><a class="page-link" onClick={page2}>2</a></li>
                     <li class="page-item"><a class="page-link" onClick={page3}>3</a></li>
                     <li class="page-item"><a class="page-link" onClick={page4}>4</a></li>
-                    
+
                 </ul>
             </nav>
         </div>

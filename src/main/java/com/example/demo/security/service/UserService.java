@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -29,7 +30,7 @@ public class UserService {
     }
 
     public User register(User user) {
-        Role role = roleRepository.findByName("Sirket");
+        Role role = roleRepository.findByName("Ogrenci");
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(role);
         user.setUsername(user.getUsername());
@@ -72,5 +73,10 @@ public class UserService {
 
     public User getUserByName(){
         return userRepository.findByUsername(authenticationFacade.getName());
+    }
+
+    public Set<Role>  getRole(){
+//        User user1 = userRepository.findByUsername(authenticationFacade.getName());
+        return userRepository.findByUsername(authenticationFacade.getName()).getRoles();
     }
 }
